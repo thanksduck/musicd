@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 function Hero(props) {
   const [formData, setFormData] = useState({ youtubeLink: "" });
   const [downloading, setDownloading] = useState(false);
@@ -18,14 +18,19 @@ function Hero(props) {
 
     try {
       const videoId = extractVideoId(formData.youtubeLink);
-      const url1 = `http://localhost:5000/download?link=${videoId}&quality=best`;
-      const response = await fetch(url1);
-      console.log("response", response);
-      if (!response.ok) {
+      const url1 = `https://ytmd.20032003.xyz/download?link=${videoId}`;
+      
+      const response = await axios({
+        method: 'get',
+        url: url1,
+        responseType: 'blob'
+      });
+    
+      if (response.status !== 200) {
         throw new Error("Download failed");
       }
-
-      const blob = await response.blob();
+    
+      const blob = new Blob([response.data], { type: 'audio/mpeg' });
       const url = window.URL.createObjectURL(blob);
       setAudioUrl(url);
     } catch (error) {
@@ -100,12 +105,12 @@ function Hero(props) {
           </button>
         </form>
         {audioUrl && (
-          <div className="mt-6">
+          <div className="mt-6 w-full text-center items-center">
             <audio controls src={audioUrl} className="w-full mb-4"></audio>
             <a
               href={audioUrl}
               download="audio.mp3"
-              className="inline-block px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600"
+              className="inline-block px-4 py-2 text-center items-center bg-green-500 text-white rounded-lg shadow hover:bg-green-600"
             >
               Download Audio
             </a>

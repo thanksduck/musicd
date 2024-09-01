@@ -25,7 +25,7 @@ dist-ssr
 
 # Python Virtual Environment
 venv
-pyenv.cfg
+pyvenv.cfg
 bin/
 include/
 lib/

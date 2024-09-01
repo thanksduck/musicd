@@ -24,7 +24,7 @@ ENV DOWNLOAD_DIR=/app/downloads
 ENV PORT=9191
 
 # Expose port
-EXPOSE 9091
+EXPOSE 9191
 
 # Run the application using the virtual environment's Python
 CMD ["venv/bin/python", "app.py"]

@@ -1,0 +1,11 @@
+services:
+  youtube-downloader:
+    image: sivm99/ytmd
+    build: .
+    ports:
+      - "9191:9191"
+    volumes:
+      - ./cookies.txt:/app/cookies.txt:ro
+    environment:
+      - COOKIES_FILE=/app/cookies.txt
+    command: sh -c "venv/bin/python app.py"

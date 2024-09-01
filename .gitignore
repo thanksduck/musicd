@@ -34,3 +34,4 @@ share/
 *.pyc
 __pycache__/
 .pycache/
+cookies.txt
