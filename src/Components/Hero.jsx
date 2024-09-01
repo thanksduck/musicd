@@ -7,8 +7,9 @@ function Hero(props) {
   const [audioUrl, setAudioUrl] = useState(null);
 
   const extractVideoId = (youtubeLink) => {
-    const urlParams = new URLSearchParams(new URL(youtubeLink).search);
-    return urlParams.get("v");
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = youtubeLink.match(regExp);
+    return (match&&match[7].length==11)? match[7] : false;
   };
 
   const handleSubmit = async (event) => {
@@ -18,6 +19,9 @@ function Hero(props) {
 
     try {
       const videoId = extractVideoId(formData.youtubeLink);
+      if (!videoId) {
+        throw new Error("Invalid YouTube link");
+      }
       const url1 = `https://ytmd.20032003.xyz/download?link=${videoId}`;
       
       const response = await axios({
